@@ -1531,6 +1531,16 @@ public class Player extends FreeColGameObject implements Nameable {
             : false;
     }
 
+    /**
+     * How many new colonists should emigrate?
+     *
+     * @return The number of new colonists should emigrate.
+     */
+    public int countEmigrate() {
+        return (isColonial()) ? immigration / getImmigrationRequired()
+            : 0;
+    }
+
 
     //
     // Liberty and founding fathers
