@@ -210,6 +210,9 @@
       <!-- Show the warnings about poor choice of tile worker. -->
       <booleanOption id="model.option.guiShowNotBestTile"
                      defaultValue="true"/>
+      <!-- Show the Claim Tile dialog at pioneer work. -->
+      <booleanOption id="model.option.guiShowClaimTile"
+                     defaultValue="false"/>
       <!-- Type of colony report. -->
       <selectOption id="model.option.colonyReport"
                     defaultValue="0" localizedLabels="true">

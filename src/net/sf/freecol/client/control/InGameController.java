@@ -2653,8 +2653,18 @@ public final class InGameController extends FreeColClientHolder {
         final Player player = getMyPlayer();
         final Tile tile = unit.getTile();
         UnitWas unitWas = new UnitWas(unit);
-        boolean ret = player.owns(tile)
-            || askClaimTile(player, tile, unit, player.getLandPrice(tile));
+        boolean ret = player.owns(tile);
+        if (!ret) {
+            Boolean b = (getFreeColClient().getClientOptions().getBoolean(
+                ClientOptions.SHOW_CLAIM_TILE)) ? getGUI().getClaimBooleanChoice() : Boolean.TRUE;
+            if (Boolean.TRUE == b) {
+                ret = askClaimTile(player, tile, unit, player.getLandPrice(tile));
+            } else if (Boolean.FALSE == b) {
+                ret = true;
+            } else { // Cancel
+                ret = false;
+            }
+        }
         if (ret) {
             ret = askServer()
                 .changeWorkImprovementType(unit, improvementType)

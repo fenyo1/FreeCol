@@ -287,6 +287,10 @@ public class ClientOptions extends OptionGroup {
     public static final String SHOW_NOT_BEST_TILE
         = "model.option.guiShowNotBestTile";
 
+    /** Show the Claim Tile dialog at pioneer work. */
+    public static final String SHOW_CLAIM_TILE
+        = "model.option.guiShowClaimTile";
+
     /** Option for selecting the compact colony report. */
     public static final String COLONY_REPORT
         = "model.option.colonyReport";

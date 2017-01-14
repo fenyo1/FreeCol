@@ -39,6 +39,7 @@ import net.sf.freecol.FreeCol;
 import net.sf.freecol.client.ClientOptions;
 import net.sf.freecol.client.FreeColClient;
 import net.sf.freecol.client.control.FreeColClientHolder;
+import net.sf.freecol.client.gui.panel.Utility;
 import net.sf.freecol.client.gui.panel.MiniMap;
 import net.sf.freecol.client.gui.dialog.Parameters;
 import net.sf.freecol.common.FreeColException;
@@ -820,6 +821,22 @@ public class GUI extends FreeColClientHolder {
 
         return getChoice(unit.getTile(), template,
                          goods.getType(), "cancel", choices);
+    }
+
+    /**
+     * Gets the user choice: "Do you want to claim this tile?".
+     *
+     * @return The chosen action, yes or no.
+     */
+    public Boolean getClaimBooleanChoice() {
+        List<ChoiceItem<Boolean>> choices = new ArrayList<>();
+        StringTemplate template;
+        template = StringTemplate.template("claimTile");
+
+        choices.add(new ChoiceItem<>(Messages.message("yes"), Boolean.TRUE));
+        choices.add(new ChoiceItem<>(Messages.message("no"), Boolean.FALSE));
+
+        return getChoice(null, Utility.localizedTextArea(template), "cancel", choices);
     }
 
     /**
