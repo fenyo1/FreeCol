@@ -2784,6 +2784,8 @@ public final class Specification {
         // @compat 0.11.6
         ret |= checkIntegerOption(GameOptions.SETTLEMENT_NUMBER_OF_GOODS_TO_SELL,
                                   GameOptions.GAMEOPTIONS_MAP, 3);
+        ret |= checkBooleanOption(GameOptions.QUICK_TRADE,
+                                  GameOptions.GAMEOPTIONS_MAP, false);
         // end @compat 0.11.6
 
         return ret;

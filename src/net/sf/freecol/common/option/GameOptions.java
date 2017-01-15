@@ -53,6 +53,10 @@ public class GameOptions {
     public static final String AMPHIBIOUS_MOVES
         = "model.option.amphibiousMoves";
 
+    /** Allow Quick Trade. */
+    public static final String QUICK_TRADE
+        = "model.option.quickTrade";
+
     /** Allow empty units to trade. */
     public static final String EMPTY_TRADERS
         = "model.option.emptyTraders";

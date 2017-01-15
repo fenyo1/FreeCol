@@ -2538,7 +2538,8 @@ public class Unit extends GoodsLocation
      * @see #remove(Locatable)
      */
     private void spendAllMoves() {
-        if (getColony() != null && getMovesLeft() < getInitialMovesLeft()) {
+        if (getColony() != null && getMovesLeft() < getInitialMovesLeft()
+            && !getSpecification().getBoolean(GameOptions.QUICK_TRADE)) {
             setMovesLeft(0);
         }
     }

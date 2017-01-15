@@ -1053,7 +1053,8 @@ public final class InGameController extends Controller {
         }
         serverPlayer.propagateToEuropeanMarkets(type, -buyAmount, random);
         serverPlayer.csFlushMarket(type, cs);
-        carrier.setMovesLeft(0);
+        if (!getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE))
+            carrier.setMovesLeft(0);
         cs.addPartial(See.only(serverPlayer), serverPlayer,
             "gold", String.valueOf(serverPlayer.getGold()));
         cs.add(See.only(serverPlayer), carrier);
@@ -2231,13 +2232,15 @@ public final class InGameController extends Controller {
         }
         if (!ret) return null;
 
-        if (unit.getInitialMovesLeft() != unit.getMovesLeft()) {
+        if (unit.getInitialMovesLeft() != unit.getMovesLeft()
+            && !getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE)) {
             unit.setMovesLeft(0);
         }
         Unit carrier = unit.getCarrier();
         if (carrier != null
             && carrier.getInitialMovesLeft() != carrier.getMovesLeft()
-            && carrier.getMovesLeft() != 0) {
+            && carrier.getMovesLeft() != 0
+            && !getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE)) {
             carrier.setMovesLeft(0);
         }
         return cs;
@@ -2612,7 +2615,8 @@ public final class InGameController extends Controller {
             + " onto " + carrier);
         cs.add(See.only(serverPlayer), gl.getGoodsContainer());
         cs.add(See.only(serverPlayer), carrier.getGoodsContainer());
-        if (carrier.getInitialMovesLeft() != carrier.getMovesLeft()) {
+        if (carrier.getInitialMovesLeft() != carrier.getMovesLeft()
+            && !getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE)) {
             carrier.setMovesLeft(0);
             cs.addPartial(See.only(serverPlayer), carrier,
                 "movesLeft", String.valueOf(carrier.getMovesLeft()));
@@ -3034,12 +3038,14 @@ public final class InGameController extends Controller {
             session.getNativeTrade().mergeFrom(nt);
             cs.add(See.only(otherPlayer),
                    new NativeTradeMessage(action, nt));
-            // Set unit moves to zero to avoid cheating.  If no
-            // action is taken, the moves will be restored when
-            // closing the session.
-            unit.setMovesLeft(0);
-            cs.addPartial(See.only(otherPlayer), unit,
-                "movesLeft", String.valueOf(unit.getMovesLeft()));
+            if (!getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE)) {
+                // Set unit moves to zero to avoid cheating.  If no
+                // action is taken, the moves will be restored when
+                // closing the session.
+                unit.setMovesLeft(0);
+                cs.addPartial(See.only(otherPlayer), unit,
+                    "movesLeft", String.valueOf(unit.getMovesLeft()));
+            }
             break;
 
         case ACK_BUY_HAGGLE: case ACK_SELL_HAGGLE: // Successful haggle
@@ -3095,7 +3101,8 @@ public final class InGameController extends Controller {
             cs.add(See.only(otherPlayer),
                    new NativeTradeMessage(action, nt));
             session.complete(cs);
-            if (action == NativeTradeAction.NAK_HAGGLE) {
+            if (action == NativeTradeAction.NAK_HAGGLE
+                && !getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE)) {
                 unit.setMovesLeft(0); // Clear moves again on hagglers
                 cs.addPartial(See.only(otherPlayer), unit,
                     "movesLeft", String.valueOf(unit.getMovesLeft()));
@@ -3505,7 +3512,8 @@ public final class InGameController extends Controller {
             logger.finest(carrier + " dumped " + amount
                 + " " + type.getSuffix() + " in Europe");
         }
-        carrier.setMovesLeft(0);
+        if (!getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE))
+            carrier.setMovesLeft(0);
         cs.add(See.only(serverPlayer), carrier);
         // Action occurs in Europe, nothing is visible to other players.
         return cs;
@@ -3752,7 +3760,8 @@ public final class InGameController extends Controller {
                 + " to " + settlement.getName());
             cs.add(See.only(serverPlayer), settlement.getGoodsContainer());
             cs.add(See.only(serverPlayer), carrier.getGoodsContainer());
-            if (carrier.getInitialMovesLeft() != carrier.getMovesLeft()) {
+            if (carrier.getInitialMovesLeft() != carrier.getMovesLeft()
+                && !getGame().getSpecification().getBoolean(GameOptions.QUICK_TRADE)) {
                 carrier.setMovesLeft(0);
                 cs.addPartial(See.only(serverPlayer), carrier,
                     "movesLeft", String.valueOf(carrier.getMovesLeft()));

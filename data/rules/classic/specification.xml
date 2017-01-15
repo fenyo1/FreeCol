@@ -4363,6 +4363,9 @@
         <!-- Whether amphibious moves are allowed. -->
         <booleanOption id="model.option.amphibiousMoves"
                        defaultValue="false"/>
+        <!-- Whether Quick Trade is allowed. -->
+        <booleanOption id="model.option.quickTrade"
+                       defaultValue="false"/>
         <!-- Allow trading with empty units. -->
         <booleanOption id="model.option.emptyTraders"
                        defaultValue="false"/>
