@@ -4474,6 +4474,24 @@
         <!-- Enable natural disasters striking colonies. -->
         <percentageOption id="model.option.naturalDisasters"
                           defaultValue="0"/>
+        <!-- Whether to make a new colonist when the food reaches 200 in a colony.
+          This is a global default value, which applies to all colonies.
+          In a colony this is overridden by the Per colony setting if specified. -->
+        <booleanOption id="model.option.defaultNewColonists"
+                       defaultValue="true"/>
+        <!-- When false: Breedable-type goods (eg. Horses) are breeded without respecting
+          the surplus production of the consumed goods (eg. Food).
+          This is a global default value, which applies to all colonies.
+          In a colony this is overridden by the Per colony setting if specified. -->
+        <booleanOption id="model.option.defaultBreedingOnlySurplus"
+                       defaultValue="true"/>
+        <!-- The Breedable-type goods (eg. Horses) are breeded with respecting
+          the surplus production of the consumed goods (eg. Food),
+          using only this percent of the consumed goods.
+          This is a global default value, which applies to all colonies.
+          In a colony this is overridden by the Per colony setting if specified. -->
+        <integerOption id="model.option.defaultBreedingConsumeRatio"
+                       defaultValue="50" minimumValue="0" maximumValue="100"/>
       </optionGroup>
       <optionGroup id="gameOptions.victoryConditions">
         <!-- Victory condition: Should the player who first defeats

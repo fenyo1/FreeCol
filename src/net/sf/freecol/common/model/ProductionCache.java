@@ -132,12 +132,41 @@ public class ProductionCache {
                 goodsUsed.add(g.getType());
                 AbstractGoods surplus
                     = new AbstractGoods(production.get(g.getType()));
-                if (modifiers.isEmpty()) {
-                    surplus.setAmount(surplus.getAmount()
-                        + getGoodsCount(g.getType()));
+                boolean isBreedableInputAndNonAI = false;
+                boolean biConsumeOnlySurplus = true;
+                int biConsumeRatio = 0;
+                if ((!colony.getOwner().isAI()) && (consumer instanceof Building)) {
+                    for (AbstractGoods output : iterable(((Building)consumer).getOutputs())) {
+                        GoodsType outputType = output.getType();
+                        if (outputType.isBreedable()
+                        && outputType.getInputType().getId().equals(g.getType().getId())) {
+                            isBreedableInputAndNonAI = true;
+                            if (colony.haveBreedingData(outputType)) {
+                                BreedingData breedingData = colony.getBreedingData(outputType);
+                                biConsumeOnlySurplus = breedingData.getConsumeOnlySurplus();
+                                biConsumeRatio = breedingData.getConsumeRatio();
+                            } else {
+                                biConsumeOnlySurplus = spec.getBoolean(GameOptions.DEFAULT_BREEDING_ONLY_SURPLUS);
+                                biConsumeRatio = spec.getInteger(GameOptions.DEFAULT_BREEDING_CONSUME_RATIO);
+                            }
+                            break;
+                        }
+                    }
+                }
+                if (isBreedableInputAndNonAI) {
+                    if (biConsumeOnlySurplus) surplus.setAmount((surplus.getAmount()*biConsumeRatio)/100);
+                    else {
+                        if (g.getType().isStorable()) surplus.setAmount(surplus.getAmount() + getGoodsCount(g.getType()));
+                        else surplus.setAmount(surplus.getAmount() + getGoodsCount(g.getType().getStoredAs()));
+                    }
                 } else {
-                    surplus.setAmount((int)FeatureContainer
-                        .applyModifiers(surplus.getAmount(), null, modifiers));
+                    if (modifiers.isEmpty()) {
+                        surplus.setAmount(surplus.getAmount()
+                            + getGoodsCount(g.getType()));
+                    } else {
+                        surplus.setAmount((int)FeatureContainer
+                            .applyModifiers(surplus.getAmount(), null, modifiers));
+                    }
                 }
                 goods.add(surplus);
             }
@@ -160,7 +189,14 @@ public class ProductionCache {
             } else if (consumer instanceof Unit) {
                 info = ((Unit)consumer).getProductionInfo(goods);
             } else if (consumer instanceof BuildQueue) {
-                info = ((BuildQueue<?>)consumer).getProductionInfo(goods);
+                BuildQueue<?> queue = (BuildQueue<?>)consumer;
+                boolean allowBuild = true;
+                if ((!colony.getOwner().isAI()) && (queue.getCurrentlyBuilding() instanceof UnitType))
+                    if (((UnitType)queue.getCurrentlyBuilding()).hasAbility(Ability.BORN_IN_COLONY))
+                        allowBuild = (colony.getMakesNewColonists() == null
+                            ? spec.getBoolean(GameOptions.DEFAULT_NEW_COLONISTS)
+                            : colony.getMakesNewColonists());
+                if (allowBuild) info = queue.getProductionInfo(goods);
             }
             if (info != null) {
                 production.add(info.getProduction());

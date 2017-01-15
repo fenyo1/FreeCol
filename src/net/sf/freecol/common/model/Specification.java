@@ -2784,6 +2784,12 @@ public final class Specification {
         // @compat 0.11.6
         ret |= checkIntegerOption(GameOptions.SETTLEMENT_NUMBER_OF_GOODS_TO_SELL,
                                   GameOptions.GAMEOPTIONS_MAP, 3);
+        ret |= checkBooleanOption(GameOptions.DEFAULT_NEW_COLONISTS,
+                                  GameOptions.GAMEOPTIONS_COLONY, true);
+        ret |= checkBooleanOption(GameOptions.DEFAULT_BREEDING_ONLY_SURPLUS,
+                                  GameOptions.GAMEOPTIONS_COLONY, true);
+        ret |= checkIntegerOption(GameOptions.DEFAULT_BREEDING_CONSUME_RATIO,
+                                  GameOptions.GAMEOPTIONS_COLONY, 50);
         // end @compat 0.11.6
 
         return ret;

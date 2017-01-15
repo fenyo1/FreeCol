@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sf.freecol.common.FreeColException;
+import net.sf.freecol.common.model.BreedingData;
 import net.sf.freecol.common.model.BuildableType;
 import net.sf.freecol.common.model.Colony;
 import net.sf.freecol.common.model.DiplomaticTrade;
@@ -992,6 +993,27 @@ public abstract class ServerAPI {
     public boolean setGoodsLevels(Colony colony, ExportData data) {
         return ask(colony.getGame(),
                    new SetGoodsLevelsMessage(colony, data));
+    }
+
+    /**
+     * Server query-response for setting MakesNewColonists.
+     *
+     * @param colony The <code>Colony</code> where the MakesNewColonists are set.
+     * @return True if the server interaction succeeded.
+     */
+    public boolean setMakesNewColonists(Colony colony) {
+        return ask(colony.getGame(), new SetMakesNewColonistsMessage(colony));
+    }
+
+    /**
+     * Server query-response for setting breeding data.
+     *
+     * @param colony The <code>Colony</code> where the settings are set.
+     * @param data The <code>BreedingData</code> setting.
+     * @return True if the server interaction succeeded.
+     */
+    public boolean setGoodsBreeding(Colony colony, BreedingData data) {
+        return ask(colony.getGame(), new SetGoodsBreedingMessage(colony, data));
     }
 
     /**

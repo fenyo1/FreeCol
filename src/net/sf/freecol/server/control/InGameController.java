@@ -40,6 +40,7 @@ import net.sf.freecol.common.i18n.Messages;
 import net.sf.freecol.common.model.Ability;
 import net.sf.freecol.common.model.AbstractGoods;
 import net.sf.freecol.common.model.AbstractUnit;
+import net.sf.freecol.common.model.BreedingData;
 import net.sf.freecol.common.model.BuildableType;
 import net.sf.freecol.common.model.Colony;
 import net.sf.freecol.common.model.CombatModel.CombatResult;
@@ -3601,6 +3602,38 @@ public final class InGameController extends Controller {
     public ChangeSet setGoodsLevels(ServerPlayer serverPlayer, Colony colony,
                                     ExportData exportData) {
         colony.setExportData(exportData);
+        return new ChangeSet().add(See.only(serverPlayer), colony);
+    }
+
+
+    /**
+     * Set makesNewColonists.
+     *
+     * @param serverPlayer The <code>ServerPlayer</code> that owns the colony.
+     * @param colony The <code>Colony</code> to set the MakesNewColonists in.
+     * @param makesNewColonists The new <code>makesNewColonists</code>.
+     * @return A <code>ChangeSet</code> encapsulating this action.
+     */
+    public ChangeSet setMakesNewColonists(ServerPlayer serverPlayer, Colony colony,
+                                        Boolean makesNewColonists) {
+        colony.setMakesNewColonists(makesNewColonists);
+        colony.invalidateCache();
+        return new ChangeSet().add(See.only(serverPlayer), colony);
+    }
+
+
+    /**
+     * Set goods breeding data.
+     *
+     * @param serverPlayer The <code>ServerPlayer</code> that owns the colony.
+     * @param colony The <code>Colony</code> to set the goods breeding data in.
+     * @param breedingData The new <code>BreedingData</code>.
+     * @return A <code>ChangeSet</code> encapsulating this action.
+     */
+    public ChangeSet setGoodsBreeding(ServerPlayer serverPlayer, Colony colony,
+                                  BreedingData breedingData) {
+        colony.setBreedingData(breedingData);
+        colony.invalidateCache();
         return new ChangeSet().add(See.only(serverPlayer), colony);
     }
 

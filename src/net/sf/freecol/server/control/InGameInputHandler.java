@@ -76,6 +76,8 @@ import net.sf.freecol.common.networking.SetBuildQueueMessage;
 import net.sf.freecol.common.networking.SetCurrentStopMessage;
 import net.sf.freecol.common.networking.SetDestinationMessage;
 import net.sf.freecol.common.networking.SetGoodsLevelsMessage;
+import net.sf.freecol.common.networking.SetGoodsBreedingMessage;
+import net.sf.freecol.common.networking.SetMakesNewColonistsMessage;
 import net.sf.freecol.common.networking.SpySettlementMessage;
 import net.sf.freecol.common.networking.TrainUnitInEuropeMessage;
 import net.sf.freecol.common.networking.TrivialMessage;
@@ -280,6 +282,12 @@ public final class InGameInputHandler extends ServerInputHandler {
         register(SetGoodsLevelsMessage.TAG,
             (Connection conn, Element e) -> handler(true, conn,
                 new SetGoodsLevelsMessage(getGame(), e)));
+        register(SetMakesNewColonistsMessage.TAG,
+            (Connection conn, Element e) -> handler(true, conn,
+                new SetMakesNewColonistsMessage(getGame(), e)));
+        register(SetGoodsBreedingMessage.TAG,
+            (Connection conn, Element e) -> handler(true, conn,
+                new SetGoodsBreedingMessage(getGame(), e)));
         register(SpySettlementMessage.TAG,
             (Connection conn, Element e) -> handler(false, conn,
                 new SpySettlementMessage(getGame(), e)));

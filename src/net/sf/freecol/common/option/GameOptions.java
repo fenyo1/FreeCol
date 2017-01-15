@@ -199,6 +199,18 @@ public class GameOptions {
     public static final String NATURAL_DISASTERS
         = "model.option.naturalDisasters";
 
+    /** Default: Colonies make new colonists. */
+    public static final String DEFAULT_NEW_COLONISTS
+        = "model.option.defaultNewColonists";
+
+    /** Default: Breeding Consumes only surplus production. */
+    public static final String DEFAULT_BREEDING_ONLY_SURPLUS
+        = "model.option.defaultBreedingOnlySurplus";
+
+    /** Default consume-ratio of surplus production by breeding. */
+    public static final String DEFAULT_BREEDING_CONSUME_RATIO
+        = "model.option.defaultBreedingConsumeRatio";
+
     ///** The cost of a single hammer when buying a building in a colony. */
     //Unused at the moment
     // public static final String HAMMER_PRICE = "hammerPrice";

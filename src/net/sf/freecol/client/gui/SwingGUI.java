@@ -1791,6 +1791,10 @@ public class SwingGUI extends GUI {
         return canvas.showWarehouseDialog(colony);
     }
 
+    public boolean showReproductionDialog(Colony colony) {
+        return canvas.showReproductionDialog(colony);
+    }
+
     public void showWorkProductionPanel(Unit unit) {
         canvas.showWorkProductionPanel(unit);
     }

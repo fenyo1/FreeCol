@@ -144,6 +144,7 @@ import net.sf.freecol.client.gui.panel.TrainPanel;
 import net.sf.freecol.client.gui.panel.Utility;
 import net.sf.freecol.client.gui.dialog.VictoryDialog;
 import net.sf.freecol.client.gui.dialog.WarehouseDialog;
+import net.sf.freecol.client.gui.dialog.ReproductionDialog;
 import net.sf.freecol.client.gui.panel.WorkProductionPanel;
 import net.sf.freecol.common.i18n.Messages;
 import net.sf.freecol.common.model.Colony;
@@ -2667,6 +2668,17 @@ public final class Canvas extends JDesktopPane {
      */
     public boolean showWarehouseDialog(Colony colony) {
         return showFreeColDialog(new WarehouseDialog(freeColClient, frame, colony),
+                                 null);
+    }
+
+    /**
+     * Display the reproduction dialog for a colony.
+     *
+     * @param colony The <code>Colony</code> to display.
+     * @return The response returned by the dialog.
+     */
+    boolean showReproductionDialog(Colony colony) {
+        return showFreeColDialog(new ReproductionDialog(freeColClient, frame, colony),
                                  null);
     }
 

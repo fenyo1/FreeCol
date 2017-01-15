@@ -148,6 +148,9 @@ public final class ColonyPanel extends PortPanel
     private JButton colonyUnitsButton
         = Utility.localizedButton("colonyPanel.colonyUnits");
 
+    private JButton reproductionButton
+        = Utility.localizedButton("colonyPanel.reproduction");
+
     // Only present in debug mode
     private JButton setGoodsButton = null;
     private JButton traceWorkButton = null;
@@ -244,6 +247,13 @@ public final class ColonyPanel extends PortPanel
     private final ActionListener occupationCmd =
         ae -> colony.setOccupationTrace(!colony.getOccupationTrace());
 
+    private final ActionListener reproductionCmd = ae -> {
+        if (getGUI().showReproductionDialog(colony)) {
+            updateWarehousePanel();
+            updateProduction();
+        }
+    };
+
 
     /**
      * The constructor for the panel.
@@ -320,6 +330,14 @@ public final class ColonyPanel extends PortPanel
                           "released");
         SwingUtilities.replaceUIInputMap(colonyUnitsButton,
             JComponent.WHEN_IN_FOCUSED_WINDOW, colonyUnitsIM);
+
+        InputMap reproductionIM = new ComponentInputMap(reproductionButton);
+        reproductionIM.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0, false),
+                          "pressed");
+        reproductionIM.put(KeyStroke.getKeyStroke(KeyEvent.VK_R, 0, true),
+                          "released");
+        SwingUtilities.replaceUIInputMap(reproductionButton,
+            JComponent.WHEN_IN_FOCUSED_WINDOW, reproductionIM);
 
         defaultTransferHandler
             = new DefaultTransferHandler(freeColClient, this);
@@ -447,6 +465,7 @@ public final class ColonyPanel extends PortPanel
         warehouseButton.addActionListener(warehouseCmd);
         buildQueueButton.addActionListener(buildQueueCmd);
         colonyUnitsButton.addActionListener(colonyUnitsCmd);
+        reproductionButton.addActionListener(reproductionCmd);
         if (setGoodsButton != null) {
             setGoodsButton.addActionListener(setGoodsCmd);
         }
@@ -459,6 +478,7 @@ public final class ColonyPanel extends PortPanel
         warehouseButton.setEnabled(isEditable());
         buildQueueButton.setEnabled(isEditable());
         colonyUnitsButton.setEnabled(isEditable());
+        reproductionButton.setEnabled(isEditable());
         if (setGoodsButton != null) {
             setGoodsButton.setEnabled(isEditable());
         }
@@ -497,7 +517,7 @@ public final class ColonyPanel extends PortPanel
         add(cargoScroll, "grow, sg, height 60:121:");
         add(outsideColonyScroll, "grow, sg, height 60:121:");
         add(warehouseScroll, "span, height 40:60:, growx");
-        int buttonFields = 6;
+        int buttonFields = 7;
         if (setGoodsButton != null) buttonFields++;
         if (traceWorkButton != null) buttonFields++;
         add(unloadButton, "span, split " + Integer.toString(buttonFields)
@@ -506,6 +526,7 @@ public final class ColonyPanel extends PortPanel
         add(warehouseButton);
         add(buildQueueButton);
         add(colonyUnitsButton);
+        add(reproductionButton);
         if (setGoodsButton != null) add(setGoodsButton);
         if (traceWorkButton != null) add(traceWorkButton);
         add(okButton, "tag ok");
@@ -522,6 +543,7 @@ public final class ColonyPanel extends PortPanel
         warehouseButton.removeActionListener(warehouseCmd);
         buildQueueButton.removeActionListener(buildQueueCmd);
         colonyUnitsButton.removeActionListener(colonyUnitsCmd);
+        reproductionButton.removeActionListener(reproductionCmd);
         if (setGoodsButton != null) {
             setGoodsButton.removeActionListener(setGoodsCmd);
         }
@@ -1086,6 +1108,7 @@ public final class ColonyPanel extends PortPanel
         warehouseButton = null;
         buildQueueButton = null;
         colonyUnitsButton = null;
+        reproductionButton = null;
         setGoodsButton = null;
         traceWorkButton = null;
         netProductionPanel = null;

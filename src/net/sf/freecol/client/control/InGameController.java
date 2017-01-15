@@ -4694,6 +4694,36 @@ public final class InGameController extends FreeColClientHolder {
     }
 
     /**
+     * Sets the MakesNewColonists setting of a colony.
+     *
+     * Called from ReproductionDialog
+     *
+     * @param colony The colony with the new MakesNewColonists value.
+     * @return True if the value were set.
+     */
+    public boolean setMakesNewColonists(Colony colony) {
+        if (colony == null) return false;
+
+        return askServer().setMakesNewColonists(colony);
+    }
+
+    /**
+     * Sets the breeding settings of a colony.
+     *
+     * Called from ReproductionDialog
+     *
+     * @param colony The colony.
+     * @param goodsType The goods for which to set the settings.
+     * @return True if the settings were set.
+     */
+    public boolean setGoodsBreeding(Colony colony, GoodsType goodsType) {
+        if (colony == null || goodsType == null) return false;
+
+        return askServer().setGoodsBreeding(colony,
+                                            colony.getBreedingData(goodsType));
+    }
+
+    /**
      * Sets the debug mode to include the extra menu commands.
      *
      * Called from DebugAction
