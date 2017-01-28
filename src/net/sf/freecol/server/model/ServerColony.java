@@ -36,6 +36,7 @@ import net.sf.freecol.common.model.Building;
 import net.sf.freecol.common.model.BuildingType;
 import net.sf.freecol.common.model.Colony;
 import net.sf.freecol.common.model.ColonyTile;
+import net.sf.freecol.common.model.Consumer;
 import net.sf.freecol.common.model.ExportData;
 import net.sf.freecol.common.model.Game;
 import net.sf.freecol.common.model.Goods;
@@ -562,7 +563,7 @@ public class ServerColony extends Colony implements ServerModelObject {
             }
             if (workLocation instanceof ServerBuilding) {
                 // FIXME: generalize to other WorkLocations?
-                ((ServerBuilding)workLocation).csCheckMissingInput(productionInfo, cs);
+                ((ServerBuilding)workLocation).csCheckMissingInput(productionInfo, cs, true);
             }
         }
 
@@ -876,6 +877,16 @@ public class ServerColony extends Colony implements ServerModelObject {
         } else {
             cs.add(See.only(owner), this);
         }
+
+        // Handle the running out of goods situation
+        for (Consumer consumer : getConsumers()) {
+            if (consumer instanceof ServerBuilding) {
+                ServerBuilding building = (ServerBuilding)consumer;
+                ProductionInfo info = building.getProductionInfo();
+                if (info != null) building.csCheckMissingInput(info, cs, false);
+            }
+        }
+
         lb.add(", ");
     }
 }

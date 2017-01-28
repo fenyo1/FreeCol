@@ -48,6 +48,8 @@ public class ServerBuilding extends Building implements ServerModelObject {
 
     private static final Logger logger = Logger.getLogger(ServerBuilding.class.getName());
 
+    private boolean alreadyMissingInput = false;
+
 
     /**
      * Trivial constructor required for all ServerModelObjects.
@@ -217,22 +219,37 @@ public class ServerBuilding extends Building implements ServerModelObject {
      *
      * @param pi The {@code ProductionInfo} for the building.
      * @param cs A {@code ChangeSet} to update.
+     * @param endOfTurn A {@code boolean} to know if it is an end or a begin of a turn now.
      */
-    public void csCheckMissingInput(ProductionInfo pi, ChangeSet cs) {
+    public void csCheckMissingInput(ProductionInfo pi, ChangeSet cs, boolean endOfTurn) {
         if (canAutoProduce()) return;
-        List<AbstractGoods> production = pi.getProduction();
-        if (!production.isEmpty()
-            && all(production, ag -> ag.getAmount() == 0)) {
-            for (GoodsType gt : transform(getInputs(),
-                                          ag -> ag.getAmount() > 0,
-                                          AbstractGoods::getType)) {
+        if (endOfTurn) {
+            alreadyMissingInput = false;
+            List<AbstractGoods> production = pi.getProduction();
+            if (!production.isEmpty()
+                && all(production, ag -> ag.getAmount() == 0)) {
+                for (GoodsType gt : transform(getInputs(),
+                                              ag -> ag.getAmount() > 0,
+                                              AbstractGoods::getType)) {
+                    alreadyMissingInput = true;
+                    cs.addMessage(getOwner(),
+                        new ModelMessage(ModelMessage.MessageType.MISSING_GOODS,
+                                         "model.building.notEnoughInput",
+                                         this, gt)
+                            .addNamed("%inputGoods%", gt)
+                            .addNamed("%building%", this)
+                            .addName("%colony%", getColony().getName()));
+                }
+            }
+        } else if (!alreadyMissingInput) {
+            for (AbstractGoods goods: pi.getConsumptionDeficit()) {
                 cs.addMessage(getOwner(),
                     new ModelMessage(ModelMessage.MessageType.MISSING_GOODS,
-                                     "model.building.notEnoughInput",
-                                     this, gt)
-                        .addNamed("%inputGoods%", gt)
+                                     "model.colony.productionMaySuffer",
+                                     this, goods.getType())
                         .addNamed("%building%", this)
-                        .addName("%colony%", getColony().getName()));
+                        .addName("%colony%", getColony().getName())
+                        .addNamed("%inputGoods%", goods.getType()));
             }
         }
     }
