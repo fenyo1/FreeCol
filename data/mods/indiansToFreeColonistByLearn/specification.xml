@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freecol-specification id="indiansToFreeColonistByLearn">
+  <unit-change-types>
+    <unit-change-type id="model.unitChange.education" preserve="true">
+      <unit-type-change from="model.unit.indianConvert"
+                        to="model.unit.freeColonist"
+                        probability="100" turns="4">
+        <scope ability-id="model.ability.upgradeConvert" ability-value="true"/>
+      </unit-type-change>
+    </unit-change-type>
+  </unit-change-types>
+</freecol-specification>

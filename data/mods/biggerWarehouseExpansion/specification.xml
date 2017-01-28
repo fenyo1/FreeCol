@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freecol-specification id="biggerWarehouseExpansion">
+  <building-types>
+    <building-type id="model.building.warehouseExpansion" extends="model.building.warehouse"
+                   upgradesFrom="model.building.warehouse" upkeep="5">
+      <!-- required-goods should not be here to avoid duplicate -->
+      <modifier id="model.modifier.warehouseStorage" type="additive" value="1000000"/>
+    </building-type>
+  </building-types>
+</freecol-specification>

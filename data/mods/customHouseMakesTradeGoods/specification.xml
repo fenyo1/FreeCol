@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freecol-specification id="customHouseMakesTradeGoods">
+  <building-types>
+    <building-type id="model.building.customHouse" workplaces="3" upkeep="15">
+      <!-- required-goods must be here to avoid start-building state -->
+      <required-goods id="model.goods.hammers" value="160"/>
+      <required-goods id="model.goods.tools" value="50"/>
+      <production>
+        <input goods-type="model.goods.tools" value="6"/>
+        <output goods-type="model.goods.tradeGoods" value="9"/>
+      </production>
+      <required-ability id="model.ability.buildCustomHouse"/>
+      <ability id="model.ability.export" value="true"/>
+      <ability id="model.ability.coastalOnly" value="false"/>
+      <ability id="model.ability.expertsUseConnections" value="true"/>
+    </building-type>
+  </building-types>
+</freecol-specification>

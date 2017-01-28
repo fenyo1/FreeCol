@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freecol-specification id="megaTrain">
+  <unit-types>
+    <unit-type id="model.unit.megaTrain" extends="wagon" offence="0" defence="1" movement="1800"
+               scoreValue="1" spaceTaken="12" space="30">
+      <required-goods id="model.goods.hammers" value="100"/>
+      <required-goods id="model.goods.tools" value="100"/>
+      <required-goods id="model.goods.horses" value="100"/>
+      <ability id="model.ability.carryGoods" value="true"/>
+      <ability id="model.ability.carryUnits" value="true"/>
+      <ability id="model.ability.canBeCaptured" value="true"/>
+      <limit id="model.limit.wagonTrains" operator="LT">
+        <leftHandSide operandType="UNITS" scopeLevel="PLAYER" />
+        <rightHandSide operandType="SETTLEMENTS" scopeLevel="PLAYER" />
+      </limit>
+    </unit-type>
+  </unit-types>
+  <building-types>
+    <building-type id="model.building.carpenterHouse">
+      <ability id="model.ability.build" value="true">
+        <scope type="model.unit.wagonTrain"/>
+      </ability>
+      <ability id="model.ability.build" value="true">
+        <scope type="model.unit.megaTrain"/>
+      </ability>
+    </building-type>
+    <building-type id="model.building.lumberMill"
+                   extends="model.building.carpenterHouse"
+                   upgradesFrom="model.building.carpenterHouse"
+                   required-population="3" upkeep="10">
+      <ability id="model.ability.build" value="true">
+        <scope type="model.unit.wagonTrain"/>
+      </ability>
+      <ability id="model.ability.build" value="true">
+        <scope type="model.unit.megaTrain"/>
+      </ability>
+    </building-type>
+  </building-types>
+</freecol-specification>

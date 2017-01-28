@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freecol-specification id="originalIndianColors">
+  <nations>
+    <nation id="model.nation.cherokee" color="0x74a44c"
+            nation-type="model.nationType.cherokee"/>
+    <nation id="model.nation.iroquois" color="0x6c3c18"
+            nation-type="model.nationType.iroquois"/>
+    <nation id="model.nation.sioux" color="0x900000"
+            nation-type="model.nationType.sioux"/>
+    <nation id="model.nation.apache" color="0xc0ac84"
+            nation-type="model.nationType.apache"/>
+  </nations>
+</freecol-specification>

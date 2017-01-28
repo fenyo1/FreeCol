@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freecol-specification id="foundingFathersAllAges">
+  <founding-fathers>
+    <founding-father id="model.foundingFather.jacobFugger" type="trade"
+                     weight1="1" weight2="5" weight3="8">
+      <event id="model.event.boycottsLifted"/>
+    </founding-father>
+    <founding-father id="model.foundingFather.georgeWashington" type="military"
+                     weight1="1" weight2="4" weight3="10">
+      <ability id="model.ability.automaticPromotion"
+               value="true"/>
+    </founding-father>
+    <founding-father id="model.foundingFather.johnPaulJones" type="military"
+                     weight1="1" weight2="6" weight3="7">
+      <unit id="model.unit.frigate"/>
+    </founding-father>
+    <founding-father id="model.foundingFather.simonBolivar" type="political"
+                     weight1="1" weight2="4" weight3="6">
+      <modifier id="model.modifier.SoL"
+                type="additive" value="20"/>
+    </founding-father>
+    <founding-father id="model.foundingFather.bartolomeDeLasCasas"
+                     type="religious"
+                     weight1="1" weight2="5" weight3="10">
+      <ability id="model.ability.upgradeConvert"
+               value="true"/>
+    </founding-father>
+  </founding-fathers>
+</freecol-specification>
